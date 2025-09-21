@@ -19,7 +19,6 @@ public class Lines {
         String[] words = text.split(" ");
         for (String word : words) {
             System.out.println(word);
-            
         }
     }
 }
