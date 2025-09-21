@@ -1,15 +1,24 @@
 package basics;
+import java.util.Scanner;
 
 public class Lines {
     public static void main(String[] args) {
-        String sentence = "Java is cool and very popular.";
-        boolean containsCool = sentence.contains("cool");
-        System.out.println("Содержит 'cool'? " + containsCool);
+        Scanner scanner = new Scanner(System.in);
 
-        String[] words = sentence.split(" ");
-        System.out.println("Количество слов: " + words.length);
+        String text = scanner.nextLine();
 
-        String replaced = sentence.replace("Java", "Kotlin");
-        System.out.println("Замена слов: " + replaced);
+        System.out.println(text.length());
+
+        System.out.println(text.toUpperCase());
+
+        if (text.contains("Java")) {
+            System.out.println(text.indexOf("Java"));
+        } else {
+            System.out.println("Не найдено");
+        }
+        String[] words = text.split(" ");
+        for (String word : words) {
+            System.out.println(word);
+        }
     }
 }
