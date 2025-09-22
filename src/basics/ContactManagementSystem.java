@@ -2,56 +2,88 @@ package basics;
 import java.util.Scanner;
 
 public class ContactManagementSystem {
-    @SuppressWarnings("checkstyle:MethodLength")
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
         String[] names = new String[100];
         String[] phoneNumbers = new String[100];
+        int contactsBook = 0;
 
-        System.out.println("Выберите действие:" +
-            "\n1. Добавить контакт" +
-            "\n2. Просмотреть контакт" +
-            "\n3. Найти контакт" +
-            "\n4. Удалить контакт" +
-            "\n5. Выйти");
+        boolean exit = false;
 
-        int choice = scanner.nextInt();
+        while (!exit) {
 
-        if (choice < 1 || choice > 5) {
-            System.out.println("Ошибка");
-        } else {
-            while (choice != 5) {
-                switch (choice) {
-                    case 1:
-                        System.out.println("Введите номер телефона контакта");
-                        String phone = scanner.nextLine();
-                        System.out.println("Введите имя контакта");
-                        String name = scanner.nextLine();
-                        System.out.println("Контакт добавлен: " + name + " (" + phone + ")");
+            System.out.println("""
+                    Выберите действие:
+                    1 - Добавить контакт
+                    2 - Просмотреть все контакты
+                    3 - Найти контакт
+                    4 - Удалить контакт
+                    5 - Выйти""");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            if (choice < 1 || choice > 5) {
+                System.out.println("Ошибка, попробуйте другое действие");
+                continue;
+            }
+
+            switch (choice) {
+
+                case 1:
+                    if (contactsBook == names.length) {
+                        System.out.println("Нет места, удалите другой контакт");
                         break;
-                    case 2:
-                        System.out.println("Выберите контакт для просмотра");
+                    }
+                    System.out.println("Введите имя пользователя");
+                    String name = scanner.nextLine();
+                    System.out.println("Вы успешно создали контакт " + name);
+                    System.out.println("Введите номер для контакта " + name);
+                    String phone = scanner.nextLine();
+                    names[contactsBook] = name;
+                    phoneNumbers[contactsBook] = phone;
+                    contactsBook++;
+                    System.out.println("Вы успешно добавили номер: " + phone + " к контакту " + name);
+                    break;
+
+                case 2:
+                    if (contactsBook == 0) {
+                        System.out.println("Контактов нет");
                         break;
-                    case 3:
-                        System.out.println("Введите имя контакта");
-                        break;
-                    case 4:
-                        System.out.println("Введите имя контакта для удаления");
-                        break;
-                    case 5:
-                        System.out.println("Вы уверены, что хотите выйти?" +
-                                "\n1 - Да" +
-                                "\n2 - Нет");
-                        int choice1 = scanner.nextInt();
-                        if (choice1 == 1) {
-                            System.out.println("Да, выйти");
-                        } else if (choice1 == 2) {
-                            System.out.println("Нет, остаться");
-                        } else {
-                            System.out.println("Ошибка выберите 1 или 2");
+                    }
+                    System.out.println("Список всех контактов");
+                    for (int i = 0; i < contactsBook; i++) {
+                        System.out.println((i + 1) + ". " + names[i] + " - " + phoneNumbers[i]);
+                    }
+                    break;
+
+                case 3:
+                    System.out.println("Введите имя контакта");
+                    String oldName = scanner.nextLine();
+                    boolean found = false;
+                    for (int i = 0; i < contactsBook; i++) {
+                        if (names[i].equalsIgnoreCase(oldName)) {
+                            System.out.println(names[i] + " - " + phoneNumbers[i]);
+                            found = true;
+                            break;
                         }
-                }
+                    }
+                    if (!found) {
+                        System.out.println("Контакт с именем " + oldName + " не найден.");
+                    }
+
+                case 4:
+                    System.out.println("Введите имя контакта для удаления");
+                    break;
+
+                case 5:
+                    exit = true;
+                    System.out.println("Выйти");
+                    break;
+
+                default:
+                    System.out.println("Нет такого пункта");
             }
         }
     }
