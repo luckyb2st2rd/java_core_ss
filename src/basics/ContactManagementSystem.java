@@ -36,6 +36,7 @@ public class ContactManagementSystem {
                         System.out.println("Нет места, удалите другой контакт");
                         break;
                     }
+
                     System.out.println("Введите имя пользователя");
                     String name = scanner.nextLine();
                     System.out.println("Вы успешно создали контакт " + name);
@@ -66,15 +67,41 @@ public class ContactManagementSystem {
                         if (names[i].equalsIgnoreCase(oldName)) {
                             System.out.println(names[i] + " - " + phoneNumbers[i]);
                             found = true;
-                            break;
                         }
                     }
                     if (!found) {
                         System.out.println("Контакт с именем " + oldName + " не найден.");
                     }
+                    break;
 
                 case 4:
                     System.out.println("Введите имя контакта для удаления");
+                    String delName = scanner.nextLine();
+
+                    int index = -1;
+
+                    for (int i = 0; i < contactsBook; i++) {
+                        if (names[i].equalsIgnoreCase(delName)) {
+                            index = i;
+                            break;
+                        }
+                    }
+                    if (index == -1) {
+                        System.out.println("Контакт с именем " + delName + " не найден.");
+                        break;
+                    }
+
+                    for (int i = index; i < contactsBook - 1; i++) {
+                        names[i] = names[i + 1];
+                        phoneNumbers[i] = phoneNumbers[i + 1];
+                    }
+
+                    names[contactsBook - 1] = null;
+                    phoneNumbers[contactsBook - 1] = null;
+
+                    contactsBook--;
+
+                    System.out.println("Контакт " + delName + " удалён.");
                     break;
 
                 case 5:
