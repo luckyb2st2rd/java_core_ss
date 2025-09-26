@@ -1,5 +1,6 @@
 package basics;
 import java.util.Scanner;
+import java.util.SortedMap;
 
 public class ContactManagementSystem {
     public static void main(String[] args) {
@@ -21,6 +22,12 @@ public class ContactManagementSystem {
                     4 - Удалить контакт
                     5 - Выйти""");
 
+            if (!scanner.hasNextInt()) {
+                System.out.println("Ошибка, попробуйте ввести 1-5.");
+                scanner.nextLine();
+                continue;
+            }
+
             int choice = scanner.nextInt();
             scanner.nextLine();
 
@@ -38,14 +45,22 @@ public class ContactManagementSystem {
                     }
 
                     System.out.println("Введите имя пользователя");
-                    String name = scanner.nextLine();
-                    System.out.println("Вы успешно создали контакт " + name);
+                    String name = scanner.nextLine().trim();
+
                     System.out.println("Введите номер для контакта " + name);
-                    String phone = scanner.nextLine();
+                    String phone = scanner.nextLine().trim();
+
+                    if (name.isEmpty() == true || phone.isEmpty() == true) {
+                        System.out.println("Обязательно напишите имя пользователя и его номер");
+                        break;
+                    }
+
                     names[contactsBook] = name;
                     phoneNumbers[contactsBook] = phone;
                     contactsBook++;
+
                     System.out.println("Вы успешно добавили номер: " + phone + " к контакту " + name);
+
                     break;
 
                 case 2:
