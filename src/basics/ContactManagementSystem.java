@@ -1,0 +1,132 @@
+package basics;
+import java.util.Scanner;
+import java.util.SortedMap;
+
+public class ContactManagementSystem {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        String[] names = new String[100];
+        String[] phoneNumbers = new String[100];
+        int contactsBook = 0;
+
+        boolean exit = false;
+
+        while (!exit) {
+
+            System.out.println("""
+                    Выберите действие:
+                    1 - Добавить контакт
+                    2 - Просмотреть все контакты
+                    3 - Найти контакт
+                    4 - Удалить контакт
+                    5 - Выйти""");
+
+            if (!scanner.hasNextInt()) {
+                System.out.println("Ошибка, попробуйте ввести 1-5.");
+                scanner.nextLine();
+                continue;
+            }
+
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            if (choice < 1 || choice > 5) {
+                System.out.println("Ошибка, попробуйте другое действие");
+                continue;
+            }
+
+            switch (choice) {
+
+                case 1:
+                    if (contactsBook == names.length) {
+                        System.out.println("Нет места, удалите другой контакт");
+                        break;
+                    }
+
+                    System.out.println("Введите имя пользователя");
+                    String name = scanner.nextLine().trim();
+
+                    System.out.println("Введите номер для контакта " + name);
+                    String phone = scanner.nextLine().trim();
+
+                    if (name.isEmpty() == true || phone.isEmpty() == true) {
+                        System.out.println("Обязательно напишите имя пользователя и его номер");
+                        break;
+                    }
+
+                    names[contactsBook] = name;
+                    phoneNumbers[contactsBook] = phone;
+                    contactsBook++;
+
+                    System.out.println("Вы успешно добавили номер: " + phone + " к контакту " + name);
+
+                    break;
+
+                case 2:
+                    if (contactsBook == 0) {
+                        System.out.println("Контактов нет");
+                        break;
+                    }
+                    System.out.println("Список всех контактов");
+                    for (int i = 0; i < contactsBook; i++) {
+                        System.out.println((i + 1) + ". " + names[i] + " - " + phoneNumbers[i]);
+                    }
+                    break;
+
+                case 3:
+                    System.out.println("Введите имя контакта");
+                    String oldName = scanner.nextLine();
+                    boolean found = false;
+                    for (int i = 0; i < contactsBook; i++) {
+                        if (names[i].equalsIgnoreCase(oldName)) {
+                            System.out.println(names[i] + " - " + phoneNumbers[i]);
+                            found = true;
+                        }
+                    }
+                    if (!found) {
+                        System.out.println("Контакт с именем " + oldName + " не найден.");
+                    }
+                    break;
+
+                case 4:
+                    System.out.println("Введите имя контакта для удаления");
+                    String delName = scanner.nextLine();
+
+                    int index = -1;
+
+                    for (int i = 0; i < contactsBook; i++) {
+                        if (names[i].equalsIgnoreCase(delName)) {
+                            index = i;
+                            break;
+                        }
+                    }
+                    if (index == -1) {
+                        System.out.println("Контакт с именем " + delName + " не найден.");
+                        break;
+                    }
+
+                    for (int i = index; i < contactsBook - 1; i++) {
+                        names[i] = names[i + 1];
+                        phoneNumbers[i] = phoneNumbers[i + 1];
+                    }
+
+                    names[contactsBook - 1] = null;
+                    phoneNumbers[contactsBook - 1] = null;
+
+                    contactsBook--;
+
+                    System.out.println("Контакт " + delName + " удалён.");
+                    break;
+
+                case 5:
+                    exit = true;
+                    System.out.println("Выйти");
+                    break;
+
+                default:
+                    System.out.println("Нет такого пункта");
+            }
+        }
+    }
+}
