@@ -1,4 +1,4 @@
-package oop.sixLesson;
+package oop.fiveLesson;
 
 public interface Printable {
 

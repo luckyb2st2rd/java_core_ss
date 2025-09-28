@@ -1,4 +1,4 @@
-package oop.sixLesson;
+package oop.fiveLesson;
 
 public class Main {
     public static void main(String[] args) {

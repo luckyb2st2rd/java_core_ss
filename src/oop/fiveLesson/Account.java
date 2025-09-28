@@ -1,4 +1,4 @@
-package oop.sixLesson;
+package oop.fiveLesson;
 
 public abstract class Account {
     protected double balance;
