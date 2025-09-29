@@ -27,5 +27,28 @@ public abstract class Publication {
         return false;
     }
 
+    @Override
+    public int hashCode() {
+        int x = 1;
+        return x;
+    }
 
+    private static int publicationCont = 0;
+
+    public static int getPublicationCont() {
+        publicationCont++;
+        return publicationCont;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public int getYear() {
+        return year;
+    }
 }
