@@ -1,10 +1,13 @@
 package oop;
 
-public class Book extends Publication {
-    public String isbn;
+import java.util.Objects;
 
-    public Book(String isbn) {
-        this.isbn = isbn;
+public class Book extends Publication implements Printable {
+    public String ISBN;
+
+    public Book(String title, String author, int year, String ISBN) {
+        super(title, author, year);
+        this.ISBN = ISBN;
     }
 
     @Override
@@ -12,21 +15,35 @@ public class Book extends Publication {
         return "Книга";
     }
 
+    public String getISBN() {
+        return ISBN;
+    }
+
+    public void setISBN(String ISBN) {
+        this.ISBN = ISBN;
+    }
+
     @Override
     public String toString() {
-        super.toString();
-        return isbn;
+        return super.toString().replace("}", "") + String.format(", ISBN='%s'}", ISBN);
     }
 
     @Override
     public boolean equals(Object obj) {
-        Object o = new Object();
-        super.equals(o);
-        return true;
+        if (!super.equals(obj)) {
+            return false;
+        }
+        Book book = (Book) obj;
+        return Objects.equals(ISBN, book.ISBN);
     }
 
     public int hashCode() {
-        super.hashCode();
-        return 1;
+        return Objects.hash(super.hashCode(), ISBN);
     }
+
+    @Override
+    public void printDetails() {
+        System.out.printf("%s | Автор: %s | Год: %d | ISBN: %s%n", getTitle(), getAuthor(), getYear(), ISBN);
+    }
+
 }

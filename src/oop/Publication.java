@@ -1,5 +1,7 @@
 package oop;
 
+import java.util.Objects;
+
 public abstract class Publication {
     private String title;
     private String author;
@@ -15,8 +17,7 @@ public abstract class Publication {
 
     @Override
     public String toString() {
-        String result = "Вы выбрали произведение " + title + " написанное " + author + " в " + year + " году.";
-        return result;
+        return String.format("%s{title='%s', author='%s', year=%d}", getType(), title, author, year);
     }
 
     @Override
@@ -24,13 +25,18 @@ public abstract class Publication {
         if (this == obj) {
             return true;
         }
-        return false;
+
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        Publication that = (Publication) obj;
+        return year == that.year && Objects.equals(title, that.title) && Objects.equals(author, that.author);
     }
 
     @Override
     public int hashCode() {
-        int x = 1;
-        return x;
+        return Objects.hash(title, author, year);
     }
 
     private static int publicationCont = 0;
@@ -44,11 +50,23 @@ public abstract class Publication {
         return title;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getAuthor() {
         return author;
     }
 
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
     public int getYear() {
         return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
     }
 }

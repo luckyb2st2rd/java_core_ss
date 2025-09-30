@@ -1,9 +1,12 @@
 package oop;
 
-public class Magazine extends Publication {
+import java.util.Objects;
+
+public class Magazine extends Publication implements Printable {
     public int issueNumber;
 
-    public Magazine(int issueNumber) {
+    public Magazine(String title, String author, int year, int issueNumber) {
+        super(title, author, year);
         this.issueNumber = issueNumber;
     }
 
@@ -14,19 +17,32 @@ public class Magazine extends Publication {
 
     @Override
     public String toString() {
-        String result = "Вы выбрали журнал ";
-        return issueNumber;
+        return super.toString().replace("}", "") + String.format(", issueNumber=%d}", issueNumber);
     }
 
     @Override
     public boolean equals(Object obj) {
-        Object o = new Object();
-        super.equals(o);
-        return true;
+        if (!super.equals(obj)) {
+            return false;
+        }
+        Magazine m = (Magazine) obj;
+        return issueNumber == m.issueNumber;
     }
 
     public int hashCode() {
-        super.hashCode();
-        return 1;
+        return Objects.hash(super.hashCode(), issueNumber);
+    }
+
+    public int getIssueNumber() {
+        return issueNumber;
+    }
+
+    public void setIssueNumber(int issueNumber) {
+        this.issueNumber = issueNumber;
+    }
+
+    @Override
+    public void printDetails() {
+        System.out.printf("%s | Автор/редакция: %s | Год: %d | Номер выпуска: %d%n", getTitle(), getAuthor(), getYear(), issueNumber);
     }
 }
