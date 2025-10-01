@@ -39,11 +39,11 @@ public abstract class Publication {
         return Objects.hash(title, author, year);
     }
 
-    private static int publicationCont = 0;
+    private static int publicationCount = 0;
 
-    public static int getPublicationCont() {
-        publicationCont++;
-        return publicationCont;
+    public static int getPublicationCount() {
+        publicationCount++;
+        return publicationCount;
     }
 
     public String getTitle() {
